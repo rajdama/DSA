@@ -1,20 +1,24 @@
 class Solution {
     public int characterReplacement(String s, int k) {
+        int low = 0;
+        int high = 0;
+        HashMap<Character,Integer> mpp = new HashMap<>();
         int max = 0;
-        for(int i=0; i<s.length(); i++){
-            int[] arr = new int[26];
+        while(high<s.length()){
+            mpp.put(s.charAt(high),mpp.getOrDefault(s.charAt(high),0)+1);
             int maxf = 0;
-            for(int j=i; j<s.length(); j++){
-                arr[s.charAt(j)-'A']++;
-                maxf = Math.max(maxf,arr[s.charAt(j)-'A']);
-                int changes = j-i+1 - maxf;
-                if(changes <= k){
-                    max = Math.max(max,j-i+1);
-                }else{
-                    break;
-                }
+            for(Integer value:mpp.values()){
+                maxf = Math.max(maxf,value);
             }
+            int changes = high - low + 1 - maxf;
+            while(changes > k){
+                mpp.put(s.charAt(low),mpp.get(s.charAt(low))-1);
+                changes--;
+                low++;
+            }
+            max = Math.max(max,high - low + 1);
+            high++;
         }
-    return max;
+        return max;
     }
 }
