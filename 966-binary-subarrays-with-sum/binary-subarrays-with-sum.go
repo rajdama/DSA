@@ -1,14 +1,14 @@
 func lessThanEquals(a []int, k int) int {
-    if (k < 0) {
+    if k < 0 {
         return 0
     }
     sum := 0
     count := 0
     left := 0
     right := 0
-    for (right < len(a)) {
+    for right < len(a) {
         sum += a[right]
-        for (sum > k) {
+        for sum > k {
             sum -= a[left]
             left++
         }
